@@ -16,6 +16,20 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 const resumeHref = `${base}${profile.resume}`;
 const year = new Date().getFullYear();
 
+const slugify = (t: string) =>
+  t.toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+const projectData = experience.map((e) => ({
+  slug: slugify(e.org),
+  org: e.org,
+  role: e.role,
+  dates: e.dates,
+  accent: e.accent,
+  points: e.points,
+  tags: e.tags,
+  details: e.details ?? '',
+  links: e.links ?? [],
+}));
+
 const nav = [
   { href: '#experience', label: 'Experience' },
   { href: '#leadership', label: 'Leadership' },
@@ -101,7 +115,7 @@ const nav = [
       <div class="exp-list">
         {
           experience.map((e) => (
-            <article class={`exp-card accent-${e.accent}`} data-reveal>
+            <article class={`exp-card accent-${e.accent}`} data-reveal data-project={slugify(e.org)}>
               <div class="exp-side">
                 <span class="mono">{e.dates}</span>
               </div>
@@ -114,6 +128,10 @@ const nav = [
                 <ul class="tags" aria-label="Topics">
                   {e.tags.map((t) => <li>{t}</li>)}
                 </ul>
+                <button class="exp-more" type="button" aria-haspopup="dialog">
+                  View details
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </button>
               </div>
             </article>
           ))
@@ -209,7 +227,205 @@ const nav = [
     <span>© {year} {profile.name}</span>
     <span class="mono">{profile.location}</span>
   </footer>
+
+  <!-- Project pop-up -->
+  <script type="application/json" id="project-data" set:html={JSON.stringify(projectData)} />
+  <dialog id="project-dialog" class="pd" aria-labelledby="pd-title">
+    <div class="pd-panel">
+      <div class="pd-top">
+        <span class="mono" id="pd-count"></span>
+        <button class="pd-close" type="button" aria-label="Close" data-pd-close>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+        </button>
+      </div>
+      <div class="pd-content">
+        <span class="mono" id="pd-dates"></span>
+        <h2 id="pd-title"></h2>
+        <p class="pd-role" id="pd-role"></p>
+        <div class="pd-block" id="pd-details-wrap" hidden>
+          <h4 class="mono">About</h4>
+          <p id="pd-details"></p>
+        </div>
+        <div class="pd-block">
+          <h4 class="mono">Highlights</h4>
+          <ul class="pd-points" id="pd-points"></ul>
+        </div>
+        <div class="pd-block">
+          <h4 class="mono">Skills &amp; topics</h4>
+          <ul class="pd-tags" id="pd-tags"></ul>
+        </div>
+        <div class="pd-links" id="pd-links" hidden></div>
+      </div>
+      <div class="pd-nav">
+        <button type="button" class="pd-step" id="pd-prev">← Previous</button>
+        <button type="button" class="pd-step" id="pd-next">Next →</button>
+      </div>
+    </div>
+  </dialog>
 </Layout>
+
+<script>
+  type Project = {
+    slug: string;
+    org: string;
+    role: string;
+    dates: string;
+    accent: string;
+    points: string[];
+    tags: string[];
+    details: string;
+    links: { label: string; url: string }[];
+  };
+
+  const dataEl = document.getElementById('project-data');
+  const projects: Project[] = dataEl ? JSON.parse(dataEl.textContent || '[]') : [];
+  const dlg = document.getElementById('project-dialog') as HTMLDialogElement | null;
+
+  if (dlg && projects.length) {
+    const $ = (id: string) => document.getElementById(id) as HTMLElement;
+    const panel = dlg.querySelector('.pd-panel') as HTMLElement;
+    const content = dlg.querySelector('.pd-content') as HTMLElement;
+    let current = 0;
+
+    const fill = (ul: HTMLElement, items: string[]) => {
+      ul.replaceChildren(
+        ...items.map((t) => {
+          const li = document.createElement('li');
+          li.textContent = t;
+          return li;
+        })
+      );
+    };
+
+    const render = (i: number, animate: boolean) => {
+      current = (i + projects.length) % projects.length;
+      const p = projects[current];
+      dlg.dataset.accent = p.accent;
+      $('pd-count').textContent = String(current + 1).padStart(2, '0') + ' / ' + String(projects.length).padStart(2, '0');
+      $('pd-dates').textContent = p.dates;
+      $('pd-title').textContent = p.org;
+      $('pd-role').textContent = p.role;
+      $('pd-details').textContent = p.details;
+      $('pd-details-wrap').hidden = !p.details;
+      fill($('pd-points'), p.points);
+      fill($('pd-tags'), p.tags);
+      const links = $('pd-links');
+      links.replaceChildren(
+        ...p.links.map((l) => {
+          const a = document.createElement('a');
+          a.className = 'btn btn-small';
+          a.href = l.url;
+          a.target = '_blank';
+          a.rel = 'noopener';
+          a.textContent = l.label;
+          return a;
+        })
+      );
+      links.hidden = p.links.length === 0;
+      $('pd-prev').hidden = $('pd-next').hidden = projects.length < 2;
+      if (animate) {
+        content.classList.remove('swap');
+        void content.offsetWidth;
+        content.classList.add('swap');
+      }
+      history.replaceState(null, '', '#project-' + p.slug);
+    };
+
+    // "expand into the project" morph (View Transitions API), with a graceful fallback
+    const canMorph =
+      typeof (document as any).startViewTransition === 'function' &&
+      !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let closing = false;
+
+    const show = () => {
+      if (!dlg.open) dlg.showModal();
+      document.body.classList.add('modal-open');
+      panel.scrollTop = 0;
+    };
+
+    const openAt = (i: number, fromCard?: HTMLElement | null) => {
+      render(i, false);
+      if (canMorph && fromCard && !dlg.open) {
+        dlg.classList.add('vt');
+        fromCard.style.setProperty('view-transition-name', 'project');
+        const t = (document as any).startViewTransition(() => {
+          fromCard.style.removeProperty('view-transition-name');
+          panel.style.setProperty('view-transition-name', 'project');
+          show();
+        });
+        t.finished.finally(() => dlg.classList.remove('vt'));
+      } else {
+        show();
+      }
+    };
+
+    const close = () => {
+      if (!dlg.open || closing) return;
+      const card = document.querySelector<HTMLElement>(
+        '.exp-card[data-project="' + projects[current].slug + '"]'
+      );
+      if (canMorph && card) {
+        closing = true;
+        dlg.classList.add('vt');
+        const t = (document as any).startViewTransition(() => {
+          panel.style.setProperty('view-transition-name', 'none');
+          dlg.close();
+          card.scrollIntoView({ block: 'nearest', behavior: 'instant' as ScrollBehavior });
+          card.style.setProperty('view-transition-name', 'project');
+        });
+        t.finished.finally(() => {
+          card.style.removeProperty('view-transition-name');
+          dlg.classList.remove('vt');
+          closing = false;
+        });
+      } else {
+        dlg.close();
+      }
+    };
+
+    // Esc key uses the same animated close
+    dlg.addEventListener('cancel', (e) => {
+      e.preventDefault();
+      close();
+    });
+
+    dlg.addEventListener('close', () => {
+      document.body.classList.remove('modal-open');
+      if (location.hash.startsWith('#project-')) history.replaceState(null, '', '#experience');
+    });
+
+    // open from a card (click anywhere on it, or its button)
+    document.querySelectorAll<HTMLElement>('.exp-card[data-project]').forEach((card) => {
+      card.addEventListener('click', (e) => {
+        if ((e.target as HTMLElement).closest('a')) return;
+        const idx = projects.findIndex((p) => p.slug === card.dataset.project);
+        if (idx >= 0) openAt(idx, card);
+      });
+    });
+
+    // close: X button, click on the dimmed area outside the panel
+    dlg.addEventListener('click', (e) => {
+      const t = e.target as HTMLElement;
+      if (t === dlg || t.closest('[data-pd-close]')) close();
+    });
+
+    $('pd-prev').addEventListener('click', () => render(current - 1, true));
+    $('pd-next').addEventListener('click', () => render(current + 1, true));
+    dlg.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') render(current - 1, true);
+      if (e.key === 'ArrowRight') render(current + 1, true);
+    });
+
+    // direct link, e.g. /#project-eco-car-team
+    const fromHash = () => {
+      const m = location.hash.match(/^#project-(.+)$/);
+      if (!m) return;
+      const idx = projects.findIndex((p) => p.slug === m[1]);
+      if (idx >= 0) openAt(idx);
+    };
+    fromHash();
+  }
+</script>
 
 <style>
   /* ---------- Buttons ---------- */
@@ -605,7 +821,7 @@ const nav = [
   /* ---------- Leadership ---------- */
   .lead-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     border-top: 1px solid var(--line);
   }
   .lead-card {

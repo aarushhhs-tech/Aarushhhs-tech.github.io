@@ -15,22 +15,35 @@ export const profile = {
 
 export const stats = [
   { value: '3+', label: 'Successful test recoveries' },
-  { value: '300', label: 'Students led as choir president' },
+  { value: '2', label: 'Vehicle teams joined at Texas A&M' },
   { value: '5', label: 'STEM podcast episodes produced' },
 ];
 
-export const experience = [
+export type Experience = {
+  org: string;
+  role: string;
+  dates: string;
+  accent: 'sky' | 'mint' | 'peach' | 'lilac';
+  points: string[];
+  tags: string[];
+  // Optional: shown inside the project pop-up when someone clicks a card
+  details?: string;
+  links?: { label: string; url: string }[];
+};
+
+export const experience: Experience[] = [
   {
-    org: 'American Rocketry Challenge & Aerospace Club',
-    role: 'Recovery Systems & Engine Research Teams',
-    dates: 'Aug 2023 — May 2025',
-    accent: 'sky',
+    org: 'Eco Car Team',
+    role: 'Apprentice Member · Texas A&M University',
+    dates: 'Oct 2026 — Present',
+    accent: 'peach',
     points: [
-      'Designed rocket recovery and landing components in Fusion 360, validating a shock-cord system through 3–4 test launches.',
-      'Achieved 3 successful test recoveries and a successful recovery at the American Rocketry Challenge (ARC) by applying aerodynamics and structural-stability principles.',
-      'Diagnosed recurring design failures with a 4-person team and implemented iterative fixes to improve recovery reliability.',
+      'Selected as an apprentice member of the student team that designs and builds a high-efficiency vehicle, supporting the team while building experience in vehicle design.',
     ],
-    tags: ['Fusion 360', 'Aerodynamics', 'Testing'],
+    tags: ['Vehicle Design', 'Teamwork'],
+    // To add more to this project's pop-up, remove the // from the next two lines and edit them:
+    // details: 'A longer paragraph about what you are working on goes here.',
+    // links: [{ label: 'Photos', url: 'https://example.com' }],
   },
   {
     org: 'American Society of Mechanical Engineers (ASME)',
@@ -43,27 +56,20 @@ export const experience = [
     tags: ['Mechanical Design', 'Fabrication'],
   },
   {
-    org: 'Eco Car Team',
-    role: 'Apprentice Member · Texas A&M University',
-    dates: 'Oct 2026 — Present',
-    accent: 'peach',
+    org: 'American Rocketry Challenge & Aerospace Club',
+    role: 'Recovery Systems & Engine Research Teams',
+    dates: 'Aug 2023 — May 2025',
+    accent: 'sky',
     points: [
-      'Selected as an apprentice member of the student team that designs and builds a high-efficiency vehicle, supporting the team while building experience in vehicle design.',
+      'Designed rocket recovery and landing components in Fusion 360, validating a shock-cord system through 3–4 test launches.',
+      'Achieved 3 successful test recoveries and a successful recovery at the American Rocketry Challenge (ARC) by applying aerodynamics and structural-stability principles.',
+      'Diagnosed recurring design failures with a 4-person team and implemented iterative fixes to improve recovery reliability.',
     ],
-    tags: ['Vehicle Design', 'Teamwork'],
+    tags: ['Fusion 360', 'Aerodynamics', 'Testing'],
   },
 ];
 
 export const leadership = [
-  {
-    org: 'Technology Student Association',
-    role: 'Officer',
-    dates: 'Aug 2024 — May 2026',
-    points: [
-      'Organized STEM activities and competitions for the chapter, overseeing logistics and timelines.',
-      'Partnered with officers and advisors to plan events, boosting chapter participation in state-level competitions.',
-    ],
-  },
   {
     org: 'Nexify Initiative',
     role: 'Executive Team · STEM Podcast Manager',
@@ -74,12 +80,12 @@ export const leadership = [
     ],
   },
   {
-    org: 'Frisco High School Choir',
-    role: 'President',
-    dates: 'Aug 2025 — May 2026',
+    org: 'Technology Student Association',
+    role: 'Officer',
+    dates: 'Aug 2024 — May 2026',
     points: [
-      'Led a choir organization of nearly 300 students, organizing rehearsals and performances with officers and directors.',
-      'Served as primary liaison between students and directors, overseeing event logistics and communication.',
+      'Organized STEM activities and competitions for the chapter, overseeing logistics and timelines.',
+      'Partnered with officers and advisors to plan events, boosting chapter participation in state-level competitions.',
     ],
   },
 ];
