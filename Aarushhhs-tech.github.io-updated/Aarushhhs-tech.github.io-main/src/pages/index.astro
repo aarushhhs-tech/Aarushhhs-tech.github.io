@@ -229,7 +229,7 @@ const nav = [
   </footer>
 
   <!-- Project pop-up -->
-  <script type="application/json" id="project-data" set:html={JSON.stringify(projectData)} />
+  <script is:inline type="application/json" id="project-data" set:html={JSON.stringify(projectData)} />
   <dialog id="project-dialog" class="pd" aria-labelledby="pd-title">
     <div class="pd-panel">
       <div class="pd-top">
