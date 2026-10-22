@@ -42,6 +42,16 @@ export const experience = [
     ],
     tags: ['Mechanical Design', 'Fabrication'],
   },
+  {
+    org: 'Eco Car Team',
+    role: 'Apprentice Member · Texas A&M University',
+    dates: 'Oct 2026 — Present',
+    accent: 'peach',
+    points: [
+      'Selected as an apprentice member of the student team that designs and builds a high-efficiency vehicle, supporting the team while building experience in vehicle design.',
+    ],
+    tags: ['Vehicle Design', 'Teamwork'],
+  },
 ];
 
 export const leadership = [
