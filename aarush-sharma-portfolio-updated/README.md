@@ -18,5 +18,3 @@ npm run build    # outputs to dist/
    - any other repo name → `base: '/<repo-name>'`
 3. In the repo: **Settings → Pages → Source: GitHub Actions**.
 4. Push — `.github/workflows/deploy.yml` builds and publishes automatically.
-
-The résumé PDF is served from `public/Aarush_Sharma_Resume.pdf`.

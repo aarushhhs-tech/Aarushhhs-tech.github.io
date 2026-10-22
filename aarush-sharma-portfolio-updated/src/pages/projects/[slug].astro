@@ -1,0 +1,62 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { resumeData } from '../../data/resume';
+
+export async function getStaticPaths() {
+  return resumeData.projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+---
+
+<Layout title={`${project.title} — Aarush Sharma`}>
+  <main class="max-w-3xl mx-auto px-6 py-12">
+    <a href="/" class="text-blue-600 hover:underline mb-8 inline-flex items-center text-sm font-medium">
+      &larr; Back to Portfolio
+    </a>
+
+    <div 
+      class="bg-white p-8 rounded-2xl border border-gray-200 shadow-sm mt-4"
+      transition:name={`project-card-${project.slug}`}
+    >
+      <div class="border-b pb-6 mb-6">
+        <h1 
+          class="text-3xl font-extrabold text-gray-900 mb-2"
+          transition:name={`project-title-${project.slug}`}
+        >
+          {project.title}
+        </h1>
+        <p class="text-sm font-medium text-gray-500">{project.role} &bull; {project.date}</p>
+      </div>
+
+      <div class="prose max-w-none text-gray-700 leading-relaxed mb-8">
+        <p class="text-lg">{project.longDescription}</p>
+      </div>
+
+      <div class="mb-8">
+        <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-3">Technologies & Tools</h3>
+        <div class="flex flex-wrap gap-2">
+          {project.technologies.map((tech) => (
+            <span class="bg-blue-50 text-blue-700 font-medium text-xs px-3 py-1.5 rounded-lg border border-blue-100">
+              {tech}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {project.link && (
+        <a 
+          href={project.link} 
+          target="_blank" 
+          rel="noopener noreferrer"
+          class="inline-flex items-center justify-center bg-gray-900 hover:bg-black text-white px-5 py-2.5 rounded-xl font-medium text-sm transition"
+        >
+          View Project Source &rarr;
+        </a>
+      )}
+    </div>
+  </main>
+</Layout>
