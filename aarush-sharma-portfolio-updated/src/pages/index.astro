@@ -1,14 +1,21 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { resumeData } from '../data/resume';
+
+const newestProjects = [...resumeData.projects].sort((a, b) => {
+  const aCurrent = /present|current/i.test(a.date) ? 1 : 0;
+  const bCurrent = /present|current/i.test(b.date) ? 1 : 0;
+  return bCurrent - aCurrent;
+});
 ---
 
 <Layout title="Aarush Sharma — Engineering & Software Portfolio">
-  <main class="site-shell">
+  <main class="site-shell" id="top">
     <nav class="topbar" aria-label="Main navigation">
       <a class="brand" href="/" aria-label="Aarush Sharma home"><span class="brand-mark">A.</span><span>Aarush Sharma</span></a>
       <div class="nav-links">
         <a href="#projects">Projects</a>
+        <a href="#experience">Experience</a>
         <a href="#about">About</a>
         <a href="#contact">Contact</a>
       </div>
@@ -41,26 +48,58 @@ import { resumeData } from '../data/resume';
 
     <section class="section projects-section" id="projects">
       <div class="section-heading">
-        <div><p class="eyebrow">SELECTED WORK</p><h2>Projects in progress<span class="heading-period">.</span></h2></div>
-        <p class="section-note">A selection of tools and experiments built to solve real problems.</p>
+        <div><p class="eyebrow">SELECTED WORK</p><h2>Projects<span class="heading-period">.</span></h2></div>
+        <p class="section-note">Select any project card to expand its overview, tools, and links. Current work is listed first.</p>
       </div>
       <div class="project-grid">
-        {resumeData.projects.map((project, index) => (
-          <article class="project-card">
-            <div class="project-card-top">
-              <span class="project-index">{String(index + 1).padStart(2, '0')}</span>
-              <span class="project-date">{project.date}</span>
+        {newestProjects.map((project, index) => (
+          <details class="project-card project-accordion">
+            <summary class="project-summary">
+              <div class="project-card-top">
+                <span class="project-index">{String(index + 1).padStart(2, '0')}</span>
+                <span class="project-date">{project.date}</span>
+              </div>
+              <h3>{project.title}</h3>
+              <p class="project-description">{project.shortDescription}</p>
+              <div class="tag-list">
+                {project.technologies.map((tech) => <span class="tag">{tech}</span>)}
+              </div>
+              <span class="expand-hint"><span class="closed-hint">Open project details +</span><span class="open-hint">Close details −</span></span>
+            </summary>
+            <div class="expanded-project">
+              <p class="expanded-label">OVERVIEW</p>
+              <p>{project.longDescription}</p>
+              <p class="expanded-role"><strong>Role:</strong> {project.role}</p>
+              <div class="expanded-links">
+                <a class="text-link" href={`/projects/${project.slug}`}>Full project page <span aria-hidden="true">↗</span></a>
+                {project.link && <a class="text-link" href={project.link} target="_blank" rel="noopener noreferrer">Source on GitHub <span aria-hidden="true">↗</span></a>}
+              </div>
             </div>
-            <h3>{project.title}</h3>
-            <p class="project-description">{project.shortDescription}</p>
-            <div class="tag-list">
-              {project.technologies.map((tech) => <span class="tag">{tech}</span>)}
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <section class="section experience-section" id="experience">
+      <div class="section-heading">
+        <div><p class="eyebrow">WHAT I'VE BEEN BUILDING</p><h2>Experience & project roles<span class="heading-period">.</span></h2></div>
+        <p class="section-note">Expand an entry to read more about the work. These entries reflect the project roles currently listed in my portfolio.</p>
+      </div>
+      <div class="experience-list">
+        {newestProjects.map((project) => (
+          <details class="experience-item">
+            <summary>
+              <span class="experience-marker" aria-hidden="true"></span>
+              <span class="experience-main"><span class="experience-role">{project.role}</span><span class="experience-title">{project.title}</span></span>
+              <span class="experience-date">{project.date}</span>
+              <span class="experience-toggle" aria-hidden="true">+</span>
+            </summary>
+            <div class="experience-expanded">
+              <p>{project.longDescription}</p>
+              <div class="tag-list">{project.technologies.map((tech) => <span class="tag">{tech}</span>)}</div>
+              <a class="text-link" href={`/projects/${project.slug}`}>View project details <span aria-hidden="true">↗</span></a>
             </div>
-            <div class="project-links">
-              <a class="text-link" href={`/projects/${project.slug}`}>Project details <span aria-hidden="true">↗</span></a>
-              {project.link && <a class="icon-link" href={project.link} target="_blank" rel="noopener noreferrer" aria-label={`View ${project.title} source on GitHub`}>↗</a>}
-            </div>
-          </article>
+          </details>
         ))}
       </div>
     </section>
@@ -85,6 +124,6 @@ import { resumeData } from '../data/resume';
       </div>
     </section>
 
-    <footer class="footer"><span>© {new Date().getFullYear()} {resumeData.name}</span><span>Designed with intention · Built with Astro</span><a href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'}); return false;">Back to top ↑</a></footer>
+    <footer class="footer"><span>© {new Date().getFullYear()} {resumeData.name}</span><span>Designed with intention · Built with Astro</span><a href="#top">Back to top ↑</a></footer>
   </main>
 </Layout>
