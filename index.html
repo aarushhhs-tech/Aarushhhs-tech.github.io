@@ -78,6 +78,71 @@ h2 { font-size:clamp(30px,4.5vw,49px); letter-spacing:-.05em; line-height:1.05; 
 .cta p { opacity:.8; font-size:14px; line-height:1.7; max-width:590px; }
 footer { display:flex; justify-content:space-between; gap:20px; padding:24px clamp(20px,5vw,76px); font-size:11px; opacity:.72; }
 @media(max-width:720px) { .nav { align-items:flex-start; flex-direction:column; } .navlinks { gap:14px; } .meta-strip { grid-template-columns:1fr; } .meta { padding:18px 24px; } .section-head { align-items:flex-start; flex-direction:column; } .cards,.skills-grid { grid-template-columns:1fr; } .timeline { grid-template-columns:1fr; gap:9px; } .cta { flex-direction:column; align-items:flex-start; } footer { flex-direction:column; } }
+/* Black + periwinkle visual system and motion */
+:root { --site-primary:#a99bff; --site-secondary:#17171d; --site-background:#09090c; --site-on-primary:#09090c; --site-on-secondary:#f3f1ff; --site-on-background:#f3f1ff; color-scheme:dark; }
+body { background:#09090c; color:#f3f1ff; }
+#app { background:#09090c; color:#f3f1ff; }
+.nav { border-color:#292733; background:rgba(9,9,12,.88); backdrop-filter:blur(16px); }
+.mark { color:#09090c; background:#a99bff; border-radius:12px; }
+.navlinks a { transition:color .25s ease, opacity .25s ease, transform .25s ease; }
+.navlinks a:hover { color:#b8adff; transform:translateY(-2px); }
+.hero { background:#09090c; color:#f7f5ff; }
+.hero:after { background:radial-gradient(ellipse at 80% 50%,rgba(169,155,255,.22),transparent 55%),repeating-linear-gradient(135deg,transparent 0 30px,rgba(169,155,255,.055) 31px 32px); }
+.eyebrow { color:#b8adff; }
+.hero p { color:#c3c0d2; }
+.btn { transition:transform .28s cubic-bezier(.2,.8,.2,1), background .28s ease, color .28s ease, border-color .28s ease, box-shadow .28s ease; }
+.btn:hover { transform:translateY(-3px); box-shadow:0 10px 30px rgba(169,155,255,.15); }
+.btn.primary { background:#a99bff; color:#09090c; border-color:#a99bff; }
+.btn.primary:hover { background:#c3baff; }
+.btn.secondary { color:#e5e0ff; border-color:#49445f; }
+.meta-strip { background:#292733; border-color:#292733; }
+.meta { background:#101014; }
+.meta span,.section-intro,.card p,.skill p,.timeline p { color:#b8b5c7; }
+.section { background:#09090c; }
+.section.alt { background:#121218; color:#f3f1ff; }
+.kicker,.timeline-date { color:#b8adff; }
+.card { background:#111116; color:#f3f1ff; border-color:#2b2937; border-radius:18px; cursor:pointer; transform:translateY(0) scale(1); transition:transform .35s cubic-bezier(.2,.8,.2,1),border-color .35s ease,box-shadow .35s ease; }
+.card-top .visual-label { display:inline-flex; align-items:center; gap:7px; color:#b8adff; }
+.open-indicator { display:inline-grid; place-items:center; width:30px; height:30px; border:1px solid #39364a; border-radius:50%; color:#c9c0ff; font-size:17px; line-height:1; transition:transform .3s ease,background .3s ease,border-color .3s ease; }
+.card:hover .open-indicator,.card:focus-visible .open-indicator { transform:translate(2px,-2px); background:#a99bff; color:#09090c; border-color:#a99bff; }
+.card:hover,.card:focus-visible { transform:translateY(-7px); border-color:#8f80f2; box-shadow:0 20px 55px rgba(0,0,0,.32),0 0 0 1px rgba(169,155,255,.12); outline:none; }
+.card-visual { background:linear-gradient(135deg,#252139,#15141d); color:#b8adff; }
+.card-visual:before { background:linear-gradient(90deg,transparent 49%,rgba(169,155,255,.15) 50%,transparent 51%),linear-gradient(0deg,transparent 49%,rgba(169,155,255,.15) 50%,transparent 51%); }
+.card-visual svg { transition:transform .5s cubic-bezier(.2,.8,.2,1); }
+.card:hover .card-visual svg { transform:scale(1.09) rotate(-3deg); }
+.status { background:#242131; color:#c9c0ff; }
+.tag { border-color:#39364a; color:#c9c5d8; }
+.skill { border-color:#a99bff; }
+.skill h3 { display:flex; align-items:center; gap:11px; }
+.skill-icon { width:38px; height:38px; flex:0 0 38px; display:grid; place-items:center; border:1px solid #39364a; border-radius:12px; background:#191722; color:#b8adff; }
+.skill-icon svg { width:20px; height:20px; }
+.project-note { display:flex; align-items:flex-start; gap:8px; color:#c4bddf; }
+.add-icon { display:inline-grid; place-items:center; flex:0 0 20px; width:20px; height:20px; border:1px solid #514875; border-radius:6px; color:#b8adff; font-size:14px; font-weight:700; line-height:1; }
+.timeline { border-color:#292733; }
+.cta { background:#a99bff; color:#09090c; }
+.cta .eyebrow { color:#30255f; }
+.cta p { color:#292342; }
+.cta .btn.primary { background:#09090c; border-color:#09090c; color:#fff; }
+.cta .btn.secondary { border-color:#554a93; color:#17132c; }
+footer { color:#b8b5c7; }
+.project-modal { position:fixed; inset:0; z-index:1000; display:grid; place-items:center; padding:22px; background:rgba(4,4,8,.78); backdrop-filter:blur(0); opacity:0; visibility:hidden; transition:opacity .35s ease,visibility .35s ease,backdrop-filter .35s ease; }
+.project-modal.is-open { opacity:1; visibility:visible; backdrop-filter:blur(12px); }
+.project-sheet { width:min(900px,100%); max-height:min(88vh,900px); overflow:auto; background:#101015; border:1px solid #39344f; border-radius:22px; box-shadow:0 35px 110px rgba(0,0,0,.55); transform:translateY(30px) scale(.97); opacity:0; transition:transform .45s cubic-bezier(.16,1,.3,1),opacity .35s ease; }
+.project-modal.is-open .project-sheet { transform:translateY(0) scale(1); opacity:1; }
+.project-sheet-visual { min-height:210px; display:flex; align-items:end; justify-content:space-between; gap:20px; padding:30px; background:radial-gradient(ellipse at 75% 35%,rgba(169,155,255,.23),transparent 55%),linear-gradient(135deg,#211d32,#101015); color:#c1b7ff; border-bottom:1px solid #39344f; }
+.project-sheet-visual svg { width:120px; height:120px; }
+.project-sheet-visual .visual-label { color:#c1b7ff; }
+.project-sheet-body { padding:clamp(24px,5vw,48px); }
+.project-sheet-head { display:flex; justify-content:space-between; align-items:flex-start; gap:20px; }
+.project-sheet h2 { margin:10px 0 16px; font-size:clamp(32px,5vw,54px); }
+.project-sheet .detail-copy { color:#c2bfd0; font-size:15px; line-height:1.9; max-width:700px; }
+.project-sheet .detail-heading { margin:28px 0 10px; font-size:14px; color:#c0b5ff; }
+.project-sheet .detail-note { border-left:2px solid #a99bff; padding:12px 16px; background:#191722; color:#c2bfd0; font-size:12px; line-height:1.8; margin-top:24px; }
+.close-project { width:42px; height:42px; flex:0 0 auto; border:1px solid #49445f; border-radius:50%; background:#1a1823; color:#f3f1ff; font-size:23px; cursor:pointer; transition:transform .25s ease,background .25s ease; }
+.close-project:hover { transform:rotate(90deg); background:#302a49; }
+body.modal-open { overflow:hidden; }
+@media(prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto!important; transition-duration:.01ms!important; animation-duration:.01ms!important; animation-iteration-count:1!important; } }
+@media(max-width:600px) { .project-modal { padding:10px; } .project-sheet { max-height:94vh; border-radius:16px; } .project-sheet-visual { min-height:155px; padding:22px; } .project-sheet-visual svg { width:85px; height:85px; } .project-sheet-head { gap:10px; } }
 </style>
 </head>
 <body>
@@ -100,30 +165,30 @@ footer { display:flex; justify-content:space-between; gap:20px; padding:24px cla
   <section class="section" id="projects">
     <div class="section-head"><div><div class="kicker">Selected work</div><h2>Projects &amp; engineering interests</h2></div><p class="section-intro">A growing portfolio of hands-on work, design practice, and technical exploration. Each project is presented honestly, with current status clearly identified.</p></div>
     <div class="cards">
-      <article class="card">
+      <article class="card" tabindex="0" role="button" aria-label="Open Rocket Recovery Systems project details" data-project="0">
         <div class="card-visual"><span class="visual-label">Recovery · CAD · Testing</span><svg viewBox="0 0 120 120" fill="none" aria-label="Schematic rocket illustration"><path d="M60 13 C45 30 42 53 47 78 L60 94 L73 78 C78 53 75 30 60 13Z" stroke="currentColor" stroke-width="2.5"/><path d="M47 66 L29 83 L45 84 M73 66 L91 83 L75 84 M53 87 L50 103 L60 97 L70 103 L67 87" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><circle cx="60" cy="49" r="7" stroke="currentColor" stroke-width="2.5"/><path d="M60 0V10 M20 30L31 37 M100 30L89 37" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 4"/></svg></div>
-        <div class="card-body"><div class="card-top"><span class="status">Completed team experience</span><span class="visual-label">01</span></div><h3>Rocket Recovery Systems</h3><p>Contributed to rocketry team projects focused on carrying two eggs and recovering the rocket safely. Work included recovery-system concepts and CAD for shock-cord components.</p><div class="tags"><span class="tag">Fusion 360</span><span class="tag">Recovery systems</span><span class="tag">Team design</span></div><div class="project-note">Portfolio upgrade: add approved CAD screenshots, test photos, design constraints, and lessons learned.</div></div>
+        <div class="card-body"><div class="card-top"><span class="status">Completed team experience</span><span class="open-indicator" aria-hidden="true">↗</span></div><h3>Rocket Recovery Systems</h3><p>Contributed to rocketry team projects focused on carrying two eggs and recovering the rocket safely. Work included recovery-system concepts and CAD for shock-cord components.</p><div class="tags"><span class="tag">Fusion 360</span><span class="tag">Recovery systems</span><span class="tag">Team design</span></div><div class="project-note"><span class="add-icon" aria-hidden="true">+</span><span>Portfolio upgrade: add approved CAD screenshots, test photos, design constraints, and lessons learned.</span></div></div>
       </article>
-      <article class="card">
+      <article class="card" tabindex="0" role="button" aria-label="Open Mechanical CAD and Design Practice project details" data-project="1">
         <div class="card-visual"><span class="visual-label">CAD · Components · Iteration</span><svg viewBox="0 0 120 120" fill="none" aria-label="Mechanical gear illustration"><circle cx="60" cy="60" r="37" stroke="currentColor" stroke-width="2.5"/><circle cx="60" cy="60" r="17" stroke="currentColor" stroke-width="2.5"/><circle cx="60" cy="60" r="5" fill="currentColor"/><path d="M60 15V31 M60 89V105 M15 60H31 M89 60H105 M28 28L39 39 M81 81L92 92 M92 28L81 39 M39 81L28 92" stroke="currentColor" stroke-width="7" stroke-linecap="square"/><path d="M60 43V55 M60 65V77 M43 60H55 M65 60H77" stroke="currentColor" stroke-width="2"/></svg></div>
-        <div class="card-body"><div class="card-top"><span class="status">Ongoing skills portfolio</span><span class="visual-label">02</span></div><h3>Mechanical CAD &amp; Design Practice</h3><p>A collection of CAD practice, including modeled parts and gears, with a focus on building confidence in part geometry, fit, and clear design communication.</p><div class="tags"><span class="tag">SolidWorks</span><span class="tag">Fusion 360</span><span class="tag">3D modeling</span></div><div class="project-note">Next step: select 2–3 strongest models and add dimensioned drawings plus a short design rationale.</div></div>
+        <div class="card-body"><div class="card-top"><span class="status">Ongoing skills portfolio</span><span class="open-indicator" aria-hidden="true">↗</span></div><h3>Mechanical CAD &amp; Design Practice</h3><p>A collection of CAD practice, including modeled parts and gears, with a focus on building confidence in part geometry, fit, and clear design communication.</p><div class="tags"><span class="tag">SolidWorks</span><span class="tag">Fusion 360</span><span class="tag">3D modeling</span></div><div class="project-note"><span class="add-icon" aria-hidden="true">+</span><span>Next step: select 2–3 strongest models and add dimensioned drawings plus a short design rationale.</span></div></div>
       </article>
-      <article class="card">
+      <article class="card" tabindex="0" role="button" aria-label="Open Automotive and Electrified Drivetrains project details" data-project="2">
         <div class="card-visual"><span class="visual-label">Vehicle systems · Electrification</span><svg viewBox="0 0 120 120" fill="none" aria-label="Vehicle chassis illustration"><path d="M15 71L24 55L41 49L52 33H78L91 51L103 57L108 72V82H13V72Z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M46 49L55 37H75L85 51H46Z M13 68H108 M30 82V90 M91 82V90" stroke="currentColor" stroke-width="2.5"/><circle cx="32" cy="81" r="9" fill="#e8e1d7" stroke="currentColor" stroke-width="2.5"/><circle cx="90" cy="81" r="9" fill="#e8e1d7" stroke="currentColor" stroke-width="2.5"/><path d="M52 62H72 M62 52V72" stroke="currentColor" stroke-width="2" stroke-dasharray="3 3"/></svg></div>
-        <div class="card-body"><div class="card-top"><span class="status">Early exploration</span><span class="visual-label">03</span></div><h3>Automotive &amp; Electrified Drivetrains</h3><p>Exploring how motors, drivetrains, vehicle controls, and mechanical packaging work together in modern vehicles, alongside involvement with the TAMU EcoCAR community.</p><div class="tags"><span class="tag">Vehicle architecture</span><span class="tag">Powertrain basics</span><span class="tag">Systems thinking</span></div><div class="project-note">No technical deliverables claimed yet. Add only approved team work after responsibilities and project outputs are confirmed.</div></div>
+        <div class="card-body"><div class="card-top"><span class="status">Early exploration</span><span class="open-indicator" aria-hidden="true">↗</span></div><h3>Automotive &amp; Electrified Drivetrains</h3><p>Exploring how motors, drivetrains, vehicle controls, and mechanical packaging work together in modern vehicles, alongside involvement with the TAMU EcoCAR community.</p><div class="tags"><span class="tag">Vehicle architecture</span><span class="tag">Powertrain basics</span><span class="tag">Systems thinking</span></div><div class="project-note"><span class="add-icon" aria-hidden="true">+</span><span>No technical deliverables claimed yet. Add only approved team work after responsibilities and project outputs are confirmed.</span></div></div>
       </article>
-      <article class="card">
+      <article class="card" tabindex="0" role="button" aria-label="Open Engineering Computation project details" data-project="3">
         <div class="card-visual"><span class="visual-label">Code · Analysis · Engineering</span><svg viewBox="0 0 120 120" fill="none" aria-label="Code and data illustration"><rect x="18" y="22" width="84" height="70" rx="5" stroke="currentColor" stroke-width="2.5"/><path d="M18 38H102 M31 30H32 M40 30H41 M49 30H50 M34 54L25 62L34 70 M48 54L57 62L48 70 M67 71L79 52 M28 103H92" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M63 83H89" stroke="currentColor" stroke-width="2.5"/></svg></div>
-        <div class="card-body"><div class="card-top"><span class="status">Learning in progress</span><span class="visual-label">04</span></div><h3>Engineering Computation</h3><p>Developing programming and computational skills through engineering coursework and practice, with the goal of applying code to analysis, automation, and design workflows.</p><div class="tags"><span class="tag">Python</span><span class="tag">MATLAB</span><span class="tag">Problem solving</span></div><div class="project-note">Next step: publish a small, well-documented script or analysis with example inputs and results.</div></div>
+        <div class="card-body"><div class="card-top"><span class="status">Learning in progress</span><span class="open-indicator" aria-hidden="true">↗</span></div><h3>Engineering Computation</h3><p>Developing programming and computational skills through engineering coursework and practice, with the goal of applying code to analysis, automation, and design workflows.</p><div class="tags"><span class="tag">Python</span><span class="tag">MATLAB</span><span class="tag">Problem solving</span></div><div class="project-note"><span class="add-icon" aria-hidden="true">+</span><span>Next step: publish a small, well-documented script or analysis with example inputs and results.</span></div></div>
       </article>
     </div>
   </section>
   <section class="section alt" id="skills">
     <div class="section-head"><div><div class="kicker">Tools &amp; approach</div><h2>Building a practical toolkit</h2></div><p class="section-intro">Skills are organized by how they support engineering work, not just as a long keyword list.</p></div>
     <div class="skills-grid">
-      <div class="skill"><h3>CAD &amp; mechanical design</h3><p>SolidWorks · Fusion 360 · Part modeling · Mechanical components · Design iteration</p></div>
-      <div class="skill"><h3>Programming &amp; computation</h3><p>Python · Java · MATLAB learning · Structured problem-solving · Technical coursework</p></div>
-      <div class="skill"><h3>Engineering process</h3><p>Concept development · Prototyping mindset · Testing and troubleshooting · Team collaboration · Documentation</p></div>
+      <div class="skill"><h3><span class="skill-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16M6 16l9-9 3 3-9 9H6zM14 8l3-3 3 3-3 3"/></svg></span>CAD &amp; mechanical design</h3><p>SolidWorks · Fusion 360 · Part modeling · Mechanical components · Design iteration</p></div>
+      <div class="skill"><h3><span class="skill-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></svg></span>Programming &amp; computation</h3><p>Python · Java · MATLAB learning · Structured problem-solving · Technical coursework</p></div>
+      <div class="skill"><h3><span class="skill-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M8 12l2.5 2.5L16 9M12 2v2M12 20v2"/></svg></span>Engineering process</h3><p>Concept development · Prototyping mindset · Testing and troubleshooting · Team collaboration · Documentation</p></div>
     </div>
   </section>
   <section class="section" id="experience">
@@ -135,6 +200,21 @@ footer { display:flex; justify-content:space-between; gap:20px; padding:24px cla
   <section class="cta" id="contact"><div><div class="eyebrow">Let’s connect</div><h2>Interested in building, learning, and solving real engineering problems.</h2><p>I’m interested in connecting with engineering students, mentors, and teams working in CAD, mechanical design, and automotive systems.</p></div><div class="actions"><a class="btn primary" href="https://www.linkedin.com/" target="_blank" rel="noreferrer">Find me on LinkedIn ↗</a><a class="btn secondary" href="#projects">Back to projects ↑</a></div></section>
   <footer><span>© <span id="year">2026</span> Aarush Sharma · Engineering Portfolio</span><span>Designed to grow with the work.</span></footer>
 </div>
-<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<div class="project-modal" id="projectModal" aria-hidden="true"><section class="project-sheet" role="dialog" aria-modal="true" aria-labelledby="projectTitle"><div class="project-sheet-visual"><span class="visual-label" id="projectCategory">PROJECT DETAILS</span><div id="projectArt" aria-hidden="true"></div></div><div class="project-sheet-body"><div class="project-sheet-head"><div><div class="kicker" id="projectStatus">PROJECT</div><h2 id="projectTitle">Project title</h2></div><button class="close-project" type="button" aria-label="Close project details">×</button></div><p class="detail-copy" id="projectDescription"></p><h3 class="detail-heading">Tools &amp; focus</h3><div class="tags" id="projectTags"></div><div class="detail-note" id="projectNote"></div><div class="actions"><button class="btn primary" id="projectBack" type="button">← Back to all projects</button></div></div></section></div>
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+const projectDetails = [
+ {title:'Rocket Recovery Systems',category:'Recovery · CAD · Testing',status:'Completed team experience',description:'Worked with a rocketry team on a rocket designed around a two-egg payload challenge. My experience included exploring recovery-system concepts and creating CAD for shock-cord components. The goal was to think carefully about protecting the payload and recovering the rocket reliably.',tags:['Fusion 360','Recovery systems','CAD components','Team design'],note:'To make this case study stronger, add your own approved CAD screenshots or test photos, then document the design constraints, your specific contribution, and what you learned. No performance figures are assumed here.'},
+ {title:'Mechanical CAD & Design Practice',category:'CAD · Components · Iteration',status:'Ongoing skills portfolio',description:'A growing collection of CAD practice, including modeled parts and gears. This work helps develop a stronger understanding of part geometry, component relationships, and communicating a design clearly before it is built.',tags:['SolidWorks','Fusion 360','3D modeling','Design iteration'],note:'The next step is to feature two or three of your strongest models, with a dimensioned drawing, screenshots from multiple views, and a short explanation of the design choices.'},
+ {title:'Automotive & Electrified Drivetrains',category:'Vehicle systems · Electrification',status:'Early exploration',description:'Exploring how electric motors, drivetrains, vehicle controls, and mechanical packaging work together in modern vehicles. This interest connects to involvement with the TAMU EcoCAR community and a longer-term goal of working in automotive engineering.',tags:['Vehicle architecture','Powertrain basics','Electrification','Systems thinking'],note:'This is currently an exploration area, not a completed technical project. Add team-specific tasks, designs, analysis, and results only after your responsibilities and deliverables are confirmed.'},
+ {title:'Engineering Computation',category:'Code · Analysis · Engineering',status:'Learning in progress',description:'Building programming and computational skills through engineering coursework and practice. The longer-term goal is to apply code to technical analysis, automation, and design workflows, with clear documentation that makes the results easy to understand.',tags:['Python','Java','MATLAB learning','Problem solving'],note:'A useful next case study would be a small script with a clear engineering purpose, example inputs, tested output, and a short explanation of how it works.'}
+];
+const modal=document.getElementById('projectModal');
+const closeButton=modal.querySelector('.close-project');
+const closeModal=()=>{modal.classList.remove('is-open');modal.setAttribute('aria-hidden','true');document.body.classList.remove('modal-open');};
+function openProject(index,card){const p=projectDetails[index];if(!p)return;document.getElementById('projectTitle').textContent=p.title;document.getElementById('projectCategory').textContent=p.category;document.getElementById('projectStatus').textContent=p.status;document.getElementById('projectDescription').textContent=p.description;document.getElementById('projectNote').textContent=p.note;document.getElementById('projectTags').replaceChildren(...p.tags.map(t=>{const el=document.createElement('span');el.className='tag';el.textContent=t;return el;}));document.getElementById('projectArt').innerHTML=card.querySelector('svg')?.outerHTML||'';modal.classList.add('is-open');modal.setAttribute('aria-hidden','false');document.body.classList.add('modal-open');closeButton.focus();}
+document.querySelectorAll('.card[data-project]').forEach(card=>{card.addEventListener('click',()=>openProject(Number(card.dataset.project),card));card.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();openProject(Number(card.dataset.project),card);}});});
+closeButton.addEventListener('click',closeModal);document.getElementById('projectBack').addEventListener('click',closeModal);modal.addEventListener('click',event=>{if(event.target===modal)closeModal();});document.addEventListener('keydown',event=>{if(event.key==='Escape'&&modal.classList.contains('is-open'))closeModal();});
+</script>
 </body>
 </html>
