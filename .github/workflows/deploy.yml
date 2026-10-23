@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Deploy standalone portfolio to GitHub Pages
 
 on:
   push:
@@ -20,24 +20,10 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-
-      - name: Install dependencies
-        working-directory: aarush-sharma-portfolio-updated
-        run: npm install --no-audit --no-fund
-
-      - name: Build Astro site
-        working-directory: aarush-sharma-portfolio-updated
-        run: npm run build
-
-      - name: Upload Pages artifact
+      - name: Upload standalone site
         uses: actions/upload-pages-artifact@v3
         with:
-          path: aarush-sharma-portfolio-updated/dist
+          path: .
 
   deploy:
     environment:
