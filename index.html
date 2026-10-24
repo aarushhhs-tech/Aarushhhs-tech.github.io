@@ -174,12 +174,15 @@ body { background:#07070a; }
 .section h2 { font-size:clamp(36px,5vw,60px); }
 .section-intro { max-width:490px; }
 .cards { display:block; position:relative; isolation:isolate; padding-bottom:2px; }
-.cards > .card { position:sticky; top:86px; width:100%; min-height:min(74vh,760px); margin:0 0 22px; display:flex; flex-direction:column; transform-origin:center center; transition:transform .7s cubic-bezier(.2,.8,.2,1),opacity .7s ease,filter .7s ease,box-shadow .7s ease,border-color .7s ease; }
+.cards > .card { position:sticky; top:86px; width:100%; min-height:min(74vh,760px); margin:0 0 22px; display:flex; flex-direction:column; transform-origin:center center; transition:min-height .65s cubic-bezier(.2,.8,.2,1),transform .7s cubic-bezier(.2,.8,.2,1),opacity .7s ease,filter .7s ease,box-shadow .7s ease,border-color .7s ease; }
 .cards > .card .card-visual { flex:1 1 auto; min-height:260px; }
 .cards > .card .card-body { flex:0 0 auto; }
 .cards > .card.stack-behind { transform:scale(.94) translateY(-10px); filter:brightness(.55); }
 .cards > .card.stack-active { transform:scale(1); filter:brightness(1); }
 .cards > .card.stack-exit { transform:scale(.9) translateY(-25px); filter:brightness(.35); }
+.cards > .card.stack-behind { min-height:min(58vh,560px); }
+.cards > .card.stack-exit { min-height:min(46vh,440px); opacity:.72; }
+.cards > .card.stack-active { min-height:min(82vh,820px); }
 .cards > .card .card-body { transition:padding .55s ease; }
 .cards > .card.stack-active .card-body { padding:clamp(27px,4vw,48px); }
 .cards > .card.stack-active .card-visual { min-height:clamp(260px,38vh,420px); transition:min-height .6s cubic-bezier(.2,.8,.2,1),background .4s ease; }
@@ -241,7 +244,7 @@ body { background:#07070a; }
 .project-sheet-visual:after { content:""; position:absolute; width:220px; height:220px; right:9%; top:-20%; border:1px solid rgba(169,155,255,.2); border-radius:50%; box-shadow:0 0 0 35px rgba(169,155,255,.025),0 0 0 70px rgba(169,155,255,.02); }
 @keyframes orbit-drift { from { transform:translate3d(0,0,0) rotate(-8deg); } to { transform:translate3d(-18px,22px,0) rotate(8deg); } }
 @keyframes dot-pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.55; transform:scale(.78); } }
-@media(max-width:720px) { .hero { min-height:unset; padding-top:78px; padding-bottom:70px; } .hero:before { width:90vw; right:-45%; top:8%; } .hero h1 { font-size:clamp(49px,13vw,78px); } .cards { display:block; } .cards > .card { top:70px; min-height:calc(100svh - 90px); margin-bottom:14px; } .cards > .card .card-visual { min-height:180px; } .cards > .card .card-body { padding:20px; } .year-tree { grid-template-columns:1fr; gap:14px; padding:0 0 0 25px; margin-top:38px; } .year-tree:before { top:10px; bottom:10px; left:7px; right:auto; width:1px; height:auto; background:linear-gradient(180deg,#a99bff,#62578f,transparent); } .year-node:before { top:28px; left:-23px; } .card-visual { min-height:190px; } .hero-console { margin-top:30px; } .skill { padding:20px; } }
+@media(max-width:720px) { .hero { min-height:unset; padding-top:78px; padding-bottom:70px; } .hero:before { width:90vw; right:-45%; top:8%; } .hero h1 { font-size:clamp(49px,13vw,78px); } .cards { display:block; } .cards > .card { top:70px; min-height:calc(100svh - 90px); margin-bottom:14px; } .cards > .card.stack-behind { min-height:calc(68svh - 80px); } .cards > .card.stack-exit { min-height:calc(54svh - 70px); } .cards > .card.stack-active { min-height:calc(100svh - 82px); } .cards > .card .card-visual { min-height:180px; } .cards > .card .card-body { padding:20px; } .year-tree { grid-template-columns:1fr; gap:14px; padding:0 0 0 25px; margin-top:38px; } .year-tree:before { top:10px; bottom:10px; left:7px; right:auto; width:1px; height:auto; background:linear-gradient(180deg,#a99bff,#62578f,transparent); } .year-node:before { top:28px; left:-23px; } .card-visual { min-height:190px; } .hero-console { margin-top:30px; } .skill { padding:20px; } }
 @media(prefers-reduced-motion:reduce) { .hero:before,.live-dot { animation:none; } .reveal { opacity:1; transform:none; } }
 </style>
 </head>
@@ -320,7 +323,7 @@ if('IntersectionObserver' in window){const revealObserver=new IntersectionObserv
 /* Scroll-driven stack: each card automatically expands at the focus line, then recedes under the next card. */
 const projectCards=[...document.querySelectorAll('.card[data-project]')];
 let scrollFocusFrame=0;
-const updateProjectFocus=()=>{scrollFocusFrame=0;const focusLine=window.innerHeight*.42;let closest=null;let closestDistance=Infinity;projectCards.forEach(card=>{const rect=card.getBoundingClientRect();const visible=rect.bottom>window.innerHeight*.08&&rect.top<window.innerHeight*.92;const center=rect.top+rect.height*.5;const distance=Math.abs(center-focusLine);if(visible&&distance<closestDistance){closest=card;closestDistance=distance;}});projectCards.forEach((card,index)=>{const rect=card.getBoundingClientRect();const active=card===closest&&closestDistance<window.innerHeight*.62;card.classList.toggle('scroll-active',active);card.classList.toggle('stack-active',active);card.classList.toggle('stack-behind',!active&&index<(closest?projectCards.indexOf(closest):0)&&rect.top<focusLine);card.classList.toggle('stack-exit',!active&&rect.bottom<window.innerHeight*.08);});};
+const updateProjectFocus=()=>{scrollFocusFrame=0;const focusLine=window.innerHeight*.36;let closest=null;let closestDistance=Infinity;projectCards.forEach(card=>{const rect=card.getBoundingClientRect();const visible=rect.bottom>window.innerHeight*.08&&rect.top<window.innerHeight*.92;const distance=Math.abs(rect.top-focusLine);if(visible&&distance<closestDistance){closest=card;closestDistance=distance;}});projectCards.forEach((card,index)=>{const rect=card.getBoundingClientRect();const active=card===closest&&closestDistance<window.innerHeight*.52;card.classList.toggle('scroll-active',active);card.classList.toggle('stack-active',active);card.classList.toggle('stack-behind',!active&&index<(closest?projectCards.indexOf(closest):0)&&rect.top<focusLine);card.classList.toggle('stack-exit',!active&&rect.bottom<window.innerHeight*.08);});};
 const scheduleProjectFocus=()=>{if(!scrollFocusFrame)scrollFocusFrame=requestAnimationFrame(updateProjectFocus);};
 window.addEventListener('scroll',scheduleProjectFocus,{passive:true});window.addEventListener('resize',scheduleProjectFocus);scheduleProjectFocus();
 document.querySelectorAll('.card').forEach(card=>card.addEventListener('pointermove',event=>{const r=card.getBoundingClientRect();card.style.setProperty('--mouse-x',(event.clientX-r.left)+'px');card.style.setProperty('--mouse-y',(event.clientY-r.top)+'px');}));
