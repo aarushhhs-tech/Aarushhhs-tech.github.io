@@ -301,6 +301,15 @@ transition:border-color .2s ease,box-shadow .2s ease;
 @media(prefers-reduced-motion:reduce){
 .project-slot>.card{transform:none!important;opacity:1;transition:none}
 }
+
+.project-slot>.card{will-change:transform;backface-visibility:hidden;opacity:1;box-shadow:0 20px 50px rgba(0,0,0,.25);border-color:#39344f;transition:none}
+.project-slot>.card .card-visual{background:linear-gradient(135deg,#252139,#15141d)}
+.project-slot>.card .card-visual svg,.project-slot>.card:hover .card-visual svg{transform:none;transition:none}
+.organization-logo{position:relative;z-index:1;width:clamp(140px,23vw,280px);height:160px;object-fit:contain;background:#fff;padding:20px;border-radius:14px}
+.university-identity{display:flex;align-items:center;gap:14px;margin-bottom:24px;font-size:14px;font-weight:700}
+.university-identity img{object-fit:contain;background:white;border-radius:10px;padding:8px}
+.project-sheet-visual .organization-logo{width:180px;height:120px}
+@media(max-width:720px){.organization-logo{width:145px;height:110px;padding:14px}}
 </style>
 </head>
 <body>
@@ -312,7 +321,7 @@ transition:border-color .2s ease,box-shadow .2s ease;
     <div class="navlinks"><a href="#experience">Projects &amp; Experience</a><a href="#skills">Skills</a><a href="#contact">Contact</a></div>
   </nav>
   <header class="hero">
-    <div class="eyebrow">Texas A&amp;M University · General Engineering · Class of 2030</div>
+    <div class="university-identity"><img src="https://www.tamu.edu/_files/images/logos/primaryTAM.png" alt="Texas A&amp;M University logo" width="64" height="64"><span>Texas A&amp;M University</span></div><div class="eyebrow">Texas A&amp;M University · General Engineering · Class of 2030</div>
     <div class="hero-project-status" aria-label="Current active projects"><span><i class="live-dot" aria-hidden="true"></i> EcoCAR Project</span><span><i class="live-dot" aria-hidden="true"></i> Go-Kart Project</span></div>
     <h1>Aarush Sharma.<br><span>Ideas into motion.</span></h1>
     <p>I’m a first-year engineering student at Texas A&amp;M, building a foundation in CAD and automotive systems. From rocket recovery components to learning with EcoCAR and ASME, I’m interested in how individual parts become working machines.</p>
@@ -337,11 +346,11 @@ transition:border-color .2s ease,box-shadow .2s ease;
         <div class="card-body"><div class="card-top"><span class="status">Ongoing skills portfolio</span><span class="open-indicator" aria-hidden="true">↗</span></div><h3>Mechanical CAD &amp; Design Practice</h3><p>A collection of CAD practice, including modeled parts and gears, with a focus on building confidence in part geometry, fit, and clear design communication.</p><div class="tags"><span class="tag">SolidWorks</span><span class="tag">Fusion 360</span><span class="tag">3D modeling</span></div><div class="project-note"><span class="add-icon" aria-hidden="true">+</span><span>Practice focus: part geometry, component fit, and communicating design intent.</span></div></div>
       </article>
       <article class="card" tabindex="0" role="button" aria-label="Open EcoCAR Project details" data-project="2">
-        <div class="card-visual"><span class="visual-label">Vehicle systems · Electrification</span><svg viewBox="0 0 120 120" fill="none" aria-label="Vehicle chassis illustration"><path d="M15 71L24 55L41 49L52 33H78L91 51L103 57L108 72V82H13V72Z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M46 49L55 37H75L85 51H46Z M13 68H108 M30 82V90 M91 82V90" stroke="currentColor" stroke-width="2.5"/><circle cx="32" cy="81" r="9" fill="#e8e1d7" stroke="currentColor" stroke-width="2.5"/><circle cx="90" cy="81" r="9" fill="#e8e1d7" stroke="currentColor" stroke-width="2.5"/><path d="M52 62H72 M62 52V72" stroke="currentColor" stroke-width="2" stroke-dasharray="3 3"/></svg></div>
+        <div class="card-visual"><span class="visual-label">Vehicle systems · Electrification</span><img class="organization-logo" src="https://avtcseries.org/wp-content/uploads/2025/09/EcoCAR-logo-InnovationChallenge-black-1.svg" alt="EcoCAR Innovation Challenge logo" width="240" height="160" loading="lazy" decoding="async"></div>
         <div class="card-body"><div class="card-top"><span class="status status-live"><span class="live-dot" aria-hidden="true"></span>Active team involvement</span><span class="open-indicator" aria-hidden="true">↗</span></div><h3 class="project-title">EcoCAR Project</h3><p>Exploring how motors, drivetrains, vehicle controls, and mechanical packaging work together in modern vehicles as part of involvement with the TAMU EcoCAR community.</p><div class="tags"><span class="tag">Vehicle architecture</span><span class="tag">Powertrain basics</span><span class="tag">Systems thinking</span></div><div class="project-note"><span class="add-icon" aria-hidden="true">+</span><span>New member · Learning vehicle systems while technical responsibilities are established.</span></div><p style="margin-top:16px"><a href="https://ecocar.tamu.edu/" target="_blank" rel="noopener noreferrer" style="color:#b8adff;font-size:12px;font-weight:750;text-underline-offset:4px" onclick="event.stopPropagation()">Explore TAMU EcoCAR ↗</a></p></div>
       </article>
       <article class="card" tabindex="0" role="button" aria-label="Open ASME and Go-Kart Program details" data-project="3">
-        <div class="card-visual"><span class="visual-label">Mechanical engineering · Student chapter</span><svg viewBox="0 0 120 120" fill="none" aria-label="Mechanical gear illustration"><circle cx="60" cy="60" r="31" stroke="currentColor" stroke-width="2.5"/><circle cx="60" cy="60" r="12" stroke="currentColor" stroke-width="2.5"/><path d="M60 13V28 M60 92V107 M13 60H28 M92 60H107 M27 27L38 38 M82 82L93 93 M93 27L82 38 M38 82L27 93" stroke="currentColor" stroke-width="8" stroke-linecap="square"/><path d="M60 48V72 M48 60H72" stroke="currentColor" stroke-width="2"/></svg></div>
+        <div class="card-visual"><span class="visual-label">Mechanical engineering · Student chapter</span><img class="organization-logo" src="https://images.squarespace-cdn.com/content/v1/5f2af83d9b57f926d5d92aa7/1596836842442-0TNMMAS0M0RX9LH3GO4M/Logo_of_the_ASME-removebg-preview.png?format=500w" alt="Texas A&M ASME logo" width="240" height="160" loading="lazy" decoding="async"></div>
         <div class="card-body"><div class="card-top"><span class="status status-live"><span class="live-dot" aria-hidden="true"></span>Active team involvement</span><span class="open-indicator" aria-hidden="true">↗</span></div><h3 class="project-title">Go-Kart Project</h3><p>Getting involved with the Texas A&amp;M ASME go-kart program and exploring hands-on mechanical design and team engineering opportunities.</p><div class="tags"><span class="tag">Mechanical engineering</span><span class="tag">Team collaboration</span><span class="tag">Go-kart program</span></div><div class="project-note"><span class="add-icon" aria-hidden="true">+</span><span>New member · Building familiarity with the team and its mechanical design work.</span></div><p style="margin-top:16px"><a href="https://www.tamuasme.com/" target="_blank" rel="noopener noreferrer" style="color:#b8adff;font-size:12px;font-weight:750;text-underline-offset:4px" onclick="event.stopPropagation()">Visit TAMU ASME ↗</a></p></div>
       </article>
       <article class="card" tabindex="0" role="button" aria-label="Open Engineering Computation project details" data-project="4">
@@ -387,8 +396,13 @@ card.classList.remove('stack-active','stack-behind','stack-exit','scroll-active'
 return {slot,card};
 });
 let scrollFocusFrame=0;
-const updateProjectFocus=()=>{
+let lastMotionTime=0;
+const motionValues=new Map();
+const updateProjectFocus=(time=performance.now())=>{
 scrollFocusFrame=0;
+const dt=Math.min(64,time-(lastMotionTime||time-16));lastMotionTime=time;
+const blend=1-Math.exp(-dt/105);
+let settling=false;
 const height=window.innerHeight;
 const focusLine=height*.52;
 const range=height*.78;
@@ -400,9 +414,13 @@ const amount=raw*raw*(3-2*raw);
 return {card,amount};
 });
 frames.forEach(({card,amount})=>{
-card.style.setProperty('--scroll-focus',amount.toFixed(4));
-card.classList.toggle('scroll-active',amount>.75);
+const previous=motionValues.get(card)??amount;
+const current=Math.abs(amount-previous)<.0005?amount:previous+(amount-previous)*blend;
+if(Math.abs(amount-current)>.0005)settling=true;
+motionValues.set(card,current);
+card.style.setProperty('--scroll-focus',current.toFixed(4));
 });
+if(settling)scrollFocusFrame=requestAnimationFrame(updateProjectFocus);
 };
 const scheduleProjectFocus=()=>{if(!scrollFocusFrame)scrollFocusFrame=requestAnimationFrame(updateProjectFocus);};
 window.addEventListener('scroll',scheduleProjectFocus,{passive:true});
@@ -421,7 +439,7 @@ const modal=document.getElementById('projectModal');
 const closeButton=modal.querySelector('.close-project');
 let projectTrigger=null;
 const closeModal=()=>{modal.classList.remove('is-open');modal.setAttribute('aria-hidden','true');document.body.classList.remove('modal-open');projectTrigger?.focus({preventScroll:true});};
-function openProject(index,card){projectTrigger=card;const p=projectDetails[index];if(!p)return;document.getElementById('projectTitle').textContent=p.title;document.getElementById('projectCategory').textContent=p.category;document.getElementById('projectStatus').textContent=p.status;document.getElementById('projectDescription').textContent=p.description;document.getElementById('projectNote').textContent=p.note;document.getElementById('projectTags').replaceChildren(...p.tags.map(t=>{const el=document.createElement('span');el.className='tag';el.textContent=t;return el;}));document.getElementById('projectArt').innerHTML=card.querySelector('svg')?.outerHTML||'';modal.querySelector('.project-sheet').scrollTop=0;modal.classList.add('is-open');modal.setAttribute('aria-hidden','false');document.body.classList.add('modal-open');closeButton.focus();}
+function openProject(index,card){projectTrigger=card;const p=projectDetails[index];if(!p)return;document.getElementById('projectTitle').textContent=p.title;document.getElementById('projectCategory').textContent=p.category;document.getElementById('projectStatus').textContent=p.status;document.getElementById('projectDescription').textContent=p.description;document.getElementById('projectNote').textContent=p.note;document.getElementById('projectTags').replaceChildren(...p.tags.map(t=>{const el=document.createElement('span');el.className='tag';el.textContent=t;return el;}));document.getElementById('projectArt').innerHTML=card.querySelector('.organization-logo,svg')?.outerHTML||'';modal.querySelector('.project-sheet').scrollTop=0;modal.classList.add('is-open');modal.setAttribute('aria-hidden','false');document.body.classList.add('modal-open');closeButton.focus();}
 document.querySelectorAll('.card[data-project]').forEach(card=>{card.addEventListener('click',()=>openProject(Number(card.dataset.project),card));card.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();openProject(Number(card.dataset.project),card);}});});
 closeButton.addEventListener('click',closeModal);document.getElementById('projectBack').addEventListener('click',closeModal);modal.addEventListener('click',event=>{if(event.target===modal)closeModal();});document.addEventListener('keydown',event=>{if(event.key==='Escape'&&modal.classList.contains('is-open'))closeModal();});
 
