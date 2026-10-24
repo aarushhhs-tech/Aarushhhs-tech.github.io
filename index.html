@@ -272,6 +272,35 @@ body { background:#07070a; }
 .cards>.card h3,.cards>.card.stack-active h3{font-size:25px}
 .card-visual svg{width:105px;height:105px}.project-sheet{max-height:90dvh}
 }
+
+/* Scroll expansion: fixed slots prevent resizing jumps in either direction. */
+.cards{gap:clamp(8px,2vh,24px)}
+.project-slot{position:relative;display:flex;align-items:center;justify-content:center;min-height:82vh;min-height:82svh;padding:12px 0}
+.project-slot>.card{
+--scroll-focus:0;
+position:relative;top:auto;width:100%;min-height:0;margin:0;
+display:flex;flex-direction:column;
+transform:scale(calc(.86 + var(--scroll-focus)*.14));
+transform-origin:center;
+opacity:calc(.65 + var(--scroll-focus)*.35);
+filter:none;
+border-color:rgba(169,155,255,calc(.18 + var(--scroll-focus)*.5));
+box-shadow:0 24px 70px rgba(0,0,0,calc(.12 + var(--scroll-focus)*.25));
+transition:border-color .2s ease,box-shadow .2s ease;
+}
+.project-slot>.card:hover,.project-slot>.card:focus-visible{transform:scale(calc(.86 + var(--scroll-focus)*.14));filter:none}
+.project-slot>.card .card-visual{flex:1;min-height:clamp(180px,32vh,360px)}
+.project-slot>.card .card-body{padding:clamp(24px,3.5vw,42px)}
+.project-slot>.card h3{font-size:clamp(25px,3vw,36px)}
+@media(max-width:720px){
+.project-slot{min-height:74vh;min-height:74svh;padding:8px 0}
+.project-slot>.card{transform:scale(calc(.9 + var(--scroll-focus)*.1))!important}
+.project-slot>.card .card-visual{min-height:170px}
+.project-slot>.card .card-body{padding:24px}
+}
+@media(prefers-reduced-motion:reduce){
+.project-slot>.card{transform:none!important;opacity:1;transition:none}
+}
 </style>
 </head>
 <body>
@@ -347,13 +376,38 @@ window.addEventListener('scroll',updateProgress,{passive:true});updateProgress()
 const revealTargets=document.querySelectorAll('.section-head,.card,.skill,.timeline,.cta');
 revealTargets.forEach(el=>el.classList.add('reveal'));
 if('IntersectionObserver' in window){const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-visible');revealObserver.unobserve(entry.target);}}),{threshold:.12});revealTargets.forEach(el=>revealObserver.observe(el));}else{revealTargets.forEach(el=>el.classList.add('is-visible'));}
-/* Scroll-driven stack: each card automatically expands at the focus line, then recedes under the next card. */
+/* Stable scroll slots keep expansion from changing its own trigger position. */
 const projectCards=[...document.querySelectorAll('.card[data-project]')];
-projectCards.sort((a,b)=>Number(getComputedStyle(a).order)-Number(getComputedStyle(b).order));
+const projectSlots=projectCards.map(card=>{
+const slot=document.createElement('div');
+slot.className='project-slot';
+slot.style.order=getComputedStyle(card).order;
+card.before(slot);slot.append(card);
+card.classList.remove('stack-active','stack-behind','stack-exit','scroll-active','reveal');
+return {slot,card};
+});
 let scrollFocusFrame=0;
-const updateProjectFocus=()=>{scrollFocusFrame=0;const focusLine=window.innerHeight*.39;let closest=null;let closestDistance=Infinity;projectCards.forEach((card,index)=>{const rect=card.getBoundingClientRect();const visible=rect.bottom>window.innerHeight*.08&&rect.top<window.innerHeight*.92;const distance=Math.abs(rect.top-focusLine);if(visible&&(distance<closestDistance||(Math.abs(distance-closestDistance)<1&&closest&&index>projectCards.indexOf(closest)))){closest=card;closestDistance=distance;}});const nextActive=closest&&closestDistance<window.innerHeight*.72?closest:null;projectCards.forEach((card,index)=>{const rect=card.getBoundingClientRect();const active=card===nextActive;card.classList.toggle('scroll-active',active);card.classList.toggle('stack-active',active);card.classList.toggle('stack-behind',!active&&index<(nextActive?projectCards.indexOf(nextActive):0)&&rect.top<focusLine);card.classList.toggle('stack-exit',!active&&rect.bottom<window.innerHeight*.08);});};
+const updateProjectFocus=()=>{
+scrollFocusFrame=0;
+const height=window.innerHeight;
+const focusLine=height*.52;
+const range=height*.78;
+const frames=projectSlots.map(({slot,card})=>{
+const rect=slot.getBoundingClientRect();
+const distance=Math.abs(rect.top+rect.height/2-focusLine);
+const raw=Math.max(0,1-distance/range);
+const amount=raw*raw*(3-2*raw);
+return {card,amount};
+});
+frames.forEach(({card,amount})=>{
+card.style.setProperty('--scroll-focus',amount.toFixed(4));
+card.classList.toggle('scroll-active',amount>.75);
+});
+};
 const scheduleProjectFocus=()=>{if(!scrollFocusFrame)scrollFocusFrame=requestAnimationFrame(updateProjectFocus);};
-window.addEventListener('scroll',scheduleProjectFocus,{passive:true});window.addEventListener('resize',scheduleProjectFocus);scheduleProjectFocus();
+window.addEventListener('scroll',scheduleProjectFocus,{passive:true});
+window.addEventListener('resize',scheduleProjectFocus);
+scheduleProjectFocus();
 document.querySelectorAll('.card').forEach(card=>card.addEventListener('pointermove',event=>{const r=card.getBoundingClientRect();card.style.setProperty('--mouse-x',(event.clientX-r.left)+'px');card.style.setProperty('--mouse-y',(event.clientY-r.top)+'px');}));
 const backTop=document.createElement('a');backTop.className='back-top';backTop.href='#app';backTop.setAttribute('aria-label','Back to top');backTop.textContent='↑';document.body.appendChild(backTop);window.addEventListener('scroll',()=>backTop.classList.toggle('is-visible',window.scrollY>500),{passive:true});
 const projectDetails = [
