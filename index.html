@@ -334,6 +334,10 @@ transition:border-color .2s ease,box-shadow .2s ease;
 .about-content p { margin:0 0 18px; }
 @media(max-width:600px) { .hero-name-row { gap:8px; } .about-content { grid-template-columns:1fr; gap:24px; } .about-portrait { max-width:180px; } }
 .project-subsection { margin:16px 0; }
+.project-subsection .project-subsection { margin:22px 0 6px; border-color:#57516c; background:#101019; }
+.project-subsection .project-subsection summary { color:#f0eaff; }
+.project-study-gallery a { cursor:zoom-in; }
+.project-study-gallery img { display:block; }
 .project-subsection summary { list-style:none; position:relative; padding-right:48px; }
 .project-subsection summary::-webkit-details-marker { display:none; }
 .project-subsection summary:after { content:'+'; position:absolute; right:20px; font-size:22px; top:10px; }
@@ -498,7 +502,8 @@ if(photo.caption){const caption=document.createElement('figcaption');caption.tex
 return figure;
 }));
 const brief=document.getElementById('projectBrief');brief.replaceChildren();
-(p.sections||[]).forEach(section=>{
+let initialConceptContent=null;
+(p.sections||[]).forEach((section,sectionIndex)=>{
   const block=document.createElement('details');block.className='pdf-details project-subsection';
   const head=document.createElement('summary');head.textContent=section.title;
   const content=document.createElement('div');content.className='pdf-details-content';
@@ -513,7 +518,13 @@ const brief=document.getElementById('projectBrief');brief.replaceChildren();
     const caption=document.createElement('figcaption');caption.textContent=photo.caption||photo.alt;figure.append(caption);
     photos.append(figure);
   });
-  content.append(photos);block.append(head,content);brief.append(block);
+  content.append(photos);block.append(head,content);
+  if(p.title==='Go-Kart Project' && sectionIndex>0 && initialConceptContent){
+    initialConceptContent.append(block);
+  } else {
+    brief.append(block);
+  }
+  if(p.title==='Go-Kart Project' && sectionIndex===0) initialConceptContent=content;
 });
 (p.details||[]).forEach(item=>{const heading=document.createElement('h3');heading.className='detail-heading';heading.textContent=item.heading;const text=document.createElement('p');text.className='detail-copy';text.textContent=item.text;brief.append(heading,text);});
 if(p.document){
