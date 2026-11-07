@@ -369,6 +369,33 @@ transition:border-color .2s ease,box-shadow .2s ease;
 .pdf-preview { display:block; width:100%; height:65vh; min-height:360px; max-height:720px; border:0; border-radius:6px; background:#fff; }
 .pdf-details-content .actions { margin-top:14px; }
 @media(max-width:600px) { .pdf-details-content { padding:10px; } .pdf-preview { height:60vh; min-height:300px; } }
+
+/* Project-only carousel beside the hero introduction. */
+.hero-showcase{display:grid;grid-template-columns:minmax(0,1fr) minmax(310px,420px);align-items:center;gap:clamp(24px,4vw,64px);margin-top:22px}
+.hero-intro{min-width:0}
+.hero-showcase h1{font-size:clamp(47px,6.3vw,100px);margin:14px 0 28px;overflow-wrap:normal}
+.hero-intro .actions{margin-top:20px}
+.hero-gallery{min-width:0;border:1px solid rgba(255,255,255,.23);background:rgba(16,11,17,.46);padding:13px;border-radius:21px;box-shadow:0 22px 45px rgba(0,0,0,.2);backdrop-filter:blur(6px)}
+.hero-gallery-top,.hero-gallery-bottom{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.hero-gallery-top{padding:5px 5px 12px}
+.hero-gallery-kicker,.hero-gallery-counter{font-size:10px;font-weight:800;letter-spacing:.17em;color:#f4dfdc}
+.hero-gallery-counter{font-variant-numeric:tabular-nums;letter-spacing:.1em}
+.hero-gallery-stage{position:relative;width:100%;aspect-ratio:4/3;overflow:hidden;border-radius:12px;background:#14121a}
+.hero-gallery-slide{position:absolute;inset:0;margin:0;opacity:0;visibility:hidden;transition:opacity .5s ease,visibility .5s ease}
+.hero-gallery-slide.is-active{opacity:1;visibility:visible}
+.hero-gallery-slide img{display:block;width:100%;height:100%;object-fit:contain;background:#17131d}
+.hero-gallery-slide figcaption{position:absolute;left:0;right:0;bottom:0;padding:25px 15px 12px;background:linear-gradient(transparent,rgba(0,0,0,.85));color:#fff;font-size:13px;font-weight:700;letter-spacing:.02em}
+.hero-gallery-arrow{position:absolute;z-index:2;top:48%;transform:translateY(-50%);width:35px;height:40px;border:1px solid rgba(255,255,255,.3);border-radius:10px;background:rgba(11,9,15,.7);color:white;cursor:pointer;font-size:28px;line-height:1}
+.hero-gallery-prev{left:9px}.hero-gallery-next{right:9px}
+.hero-gallery-arrow:hover,.hero-gallery-arrow:focus-visible{background:#5e3e61}
+.hero-gallery-bottom{padding:14px 5px 3px;font-size:11px;letter-spacing:.04em;color:#f2e2e0}
+.hero-gallery-dots{display:flex;align-items:center;gap:7px}
+.hero-gallery-dot{width:9px;height:9px;border:0;border-radius:99px;background:rgba(255,255,255,.38);cursor:pointer;padding:0;transition:width .2s,background .2s}
+.hero-gallery-dot.is-active{width:24px;background:#fff}
+@media(max-width:1050px){.hero-showcase{grid-template-columns:1fr}.hero-gallery{width:min(100%,560px)}.hero-showcase h1{font-size:clamp(48px,8vw,100px)}}
+@media(max-width:550px){.hero-showcase{gap:25px}.hero-gallery{padding:10px;border-radius:16px}.hero-gallery-stage{aspect-ratio:5/4}.hero-gallery-bottom{font-size:10px}}
+@media(prefers-reduced-motion:reduce){.hero-gallery-slide,.hero-gallery-dot{transition:none!important}}
+
 </style>
 </head>
 <body>
@@ -382,8 +409,26 @@ transition:border-color .2s ease,box-shadow .2s ease;
   <header class="hero">
     <div class="university-identity"><img src="https://www.tamu.edu/_files/images/logos/primaryTAM.png" alt="Texas A&amp;M University logo" width="64" height="64"><span>Texas A&amp;M University</span></div><div class="eyebrow">Texas A&amp;M University · General Engineering · Class of 2030</div>
     <div class="hero-project-status" aria-label="Current active projects"><span><i class="live-dot" aria-hidden="true"></i> EcoCAR Project</span><span><i class="live-dot" aria-hidden="true"></i> Go-Kart Project</span></div>
-    <h1>Aarush Sharma<br><span>Engineer</span></h1>
-    <div class="actions"><a class="btn primary" href="#experience">Explore my work <span aria-hidden="true">↘</span></a><a class="btn primary" href="/Aarush_Sharma_Resume.pdf" target="_blank" rel="noopener">View résumé ↗</a><button class="btn secondary about-trigger" type="button" data-open-about aria-haspopup="dialog" aria-controls="aboutModal">About Me <span aria-hidden="true">↗</span></button></div>
+    <div class="hero-showcase">
+      <div class="hero-intro">
+        <h1>Aarush Sharma<br><span>Engineer</span></h1>
+        <div class="actions"><a class="btn primary" href="#experience">Explore my work <span aria-hidden="true">↘</span></a><a class="btn primary" href="/Aarush_Sharma_Resume.pdf" target="_blank" rel="noopener">View résumé ↗</a><button class="btn secondary about-trigger" type="button" data-open-about aria-haspopup="dialog" aria-controls="aboutModal">About Me <span aria-hidden="true">↗</span></button></div>
+      </div>
+      <section class="hero-gallery" aria-label="Selected project photographs and CAD models" aria-roledescription="carousel">
+        <div class="hero-gallery-top"><span class="hero-gallery-kicker">PROJECT SNAPSHOTS</span><span class="hero-gallery-counter" aria-live="polite">01 / 06</span></div>
+        <div class="hero-gallery-stage">
+          <figure class="hero-gallery-slide is-active"><img src="assets/rocket-recovery-concept.jpg" alt="Rocket recovery system design concept" loading="eager" decoding="async"><figcaption>Rocket Recovery</figcaption></figure>
+          <figure class="hero-gallery-slide" aria-hidden="true"><img src="assets/go-kart-team.jpg" alt="ASME go-kart project team photograph" loading="lazy" decoding="async"><figcaption>ASME Go-Kart</figcaption></figure>
+          <figure class="hero-gallery-slide" aria-hidden="true"><img src="assets/initial-go-kart-chassis-full.webp" alt="Initial go-kart chassis designed in SOLIDWORKS" loading="lazy" decoding="async"><figcaption>Chassis CAD</figcaption></figure>
+          <figure class="hero-gallery-slide" aria-hidden="true"><img src="assets/solidworks-rounded-shell-practice.png" alt="SOLIDWORKS rounded shell modeling practice" loading="lazy" decoding="async"><figcaption>CAD Practice</figcaption></figure>
+          <figure class="hero-gallery-slide" aria-hidden="true"><img src="assets/solidworks-vessel-practice.png" alt="SOLIDWORKS vessel modeling practice" loading="lazy" decoding="async"><figcaption>CAD Practice</figcaption></figure>
+          <figure class="hero-gallery-slide" aria-hidden="true"><img src="assets/static-test-stress.webp" alt="Go-kart chassis static stress simulation" loading="lazy" decoding="async"><figcaption>Structural Analysis</figcaption></figure>
+          <button type="button" class="hero-gallery-arrow hero-gallery-prev" aria-label="Previous project image">‹</button>
+          <button type="button" class="hero-gallery-arrow hero-gallery-next" aria-label="Next project image">›</button>
+        </div>
+        <div class="hero-gallery-bottom"><span>Design • Build • Analyze</span><div class="hero-gallery-dots" aria-label="Choose gallery image"><button type="button" class="hero-gallery-dot is-active" aria-label="Show image 1: Rocket Recovery" aria-pressed="true"></button><button type="button" class="hero-gallery-dot" aria-label="Show image 2: ASME Go-Kart" aria-pressed="false"></button><button type="button" class="hero-gallery-dot" aria-label="Show image 3: Chassis CAD" aria-pressed="false"></button><button type="button" class="hero-gallery-dot" aria-label="Show image 4: CAD Practice" aria-pressed="false"></button><button type="button" class="hero-gallery-dot" aria-label="Show image 5: CAD Practice" aria-pressed="false"></button><button type="button" class="hero-gallery-dot" aria-label="Show image 6: Structural Analysis" aria-pressed="false"></button></div></div>
+      </section>
+    </div>
 
   </header>
   <div class="meta-strip">
@@ -625,6 +670,35 @@ const first=focusable[0],last=focusable[focusable.length-1];
 if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus();}
 else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}
 });
+
+/* Hero project gallery — real project assets only, no logos or certificates. */
+(()=>{
+const root=document.querySelector('.hero-gallery');if(!root)return;
+const slides=Array.from(root.querySelectorAll('.hero-gallery-slide'));
+const dots=Array.from(root.querySelectorAll('.hero-gallery-dot'));
+const counter=root.querySelector('.hero-gallery-counter');
+const prev=root.querySelector('.hero-gallery-prev');
+const next=root.querySelector('.hero-gallery-next');
+let current=0,timer=null;
+const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
+function show(index){
+ current=(index+slides.length)%slides.length;
+ slides.forEach((slide,i)=>{const active=i===current;slide.classList.toggle('is-active',active);slide.setAttribute('aria-hidden',String(!active));});
+ dots.forEach((dot,i)=>{const active=i===current;dot.classList.toggle('is-active',active);dot.setAttribute('aria-pressed',String(active));});
+ counter.textContent=String(current+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');
+}
+function stop(){if(timer!==null){window.clearInterval(timer);timer=null;}}
+function start(){stop();if(reduced.matches||document.hidden||root.matches(':hover')||root.contains(document.activeElement))return;timer=window.setInterval(()=>show(current+1),4800);}
+prev.addEventListener('click',()=>{show(current-1);start();});
+next.addEventListener('click',()=>{show(current+1);start();});
+dots.forEach((dot,i)=>dot.addEventListener('click',()=>{show(i);start();}));
+root.addEventListener('mouseenter',stop);root.addEventListener('mouseleave',start);
+root.addEventListener('focusin',stop);root.addEventListener('focusout',()=>window.setTimeout(start,0));
+document.addEventListener('visibilitychange',start);
+if(reduced.addEventListener)reduced.addEventListener('change',start);
+show(0);start();
+})();
+
 </script>
 </body>
 </html>
