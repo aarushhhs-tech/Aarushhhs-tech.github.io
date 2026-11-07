@@ -336,6 +336,13 @@ transition:border-color .2s ease,box-shadow .2s ease;
 .about-content p { margin:0 0 18px; }
 @media(max-width:600px) { .hero-name-row { gap:8px; } .about-content { grid-template-columns:1fr; gap:24px; } .about-portrait { max-width:180px; } }
 .project-subsection { margin:16px 0; }
+.certificate-summary { display:flex; gap:12px; align-items:center; }
+.certificate-summary-icon { font-size:21px; color:#c9c0ff; }
+.certificate-subsection .project-study-gallery { display:block; }
+.certificate-subsection .project-study-gallery figure { max-width:100%; }
+.certificate-subsection .project-study-gallery img { width:100%; height:auto; border-radius:10px; background:#fff; }
+.certificate-subsection .actions { margin-top:16px; }
+
 .concept-preview-summary { display:flex; align-items:center; gap:15px; min-height:92px; }
 .concept-preview-thumb { display:block; width:118px; height:70px; flex:0 0 118px; object-fit:contain; background:#e7e9ed; border:1px solid #494459; border-radius:9px; }
 .concept-preview-title { display:block; min-width:0; line-height:1.45; }
@@ -505,7 +512,7 @@ const projectDetails = [
 {src:'assets/torsion-rear-safety.webp',alt:'Rear axle torsion factor of safety plot',caption:'Factor of safety — minimum 3.4'},
 {src:'assets/torsion-rear-settings.webp',alt:'Rear axle Simulation tree with +100 and −100 lbf forces',caption:'Simulation settings — +100 and −100 lbf'}
 ]}],details:[{heading:'Initial Chassis Concept — Subject to Change',text:'My first SOLIDWORKS chassis concept uses a tubular frame, transverse supports, mounting plates and front spindle support geometry. The current shape and component layout are exploratory; dimensions, mounts, joint details, material selection and chassis geometry may change after team review, packaging checks and analysis.'},{heading:'CAD & Structural Design',text:'Modeled round tubing using custom Weldments profiles and added engine, seat and pedal-area mounting platforms. Explored member intersections and welded-joint representation, with ongoing attention to manufacturability and component clearances.'},{heading:'Structural analysis',text:'Set up preliminary SOLIDWORKS Simulation studies to examine driver and engine loads, torsional loading, Von Mises stress, displacement and factor of safety. A recent torsion-study plot indicated approximately 17.9 mm maximum resultant displacement and a critical factor of safety near 1.0; these values are preliminary and sensitive to modeling assumptions.'},{heading:'Engineering iteration',text:'Reviewing the connection model, support constraints, material properties and mesh quality before calculating validated torsional stiffness or making structural changes. The 147.5 lb average driver and 60 lb provisional engine loads inform current study inputs; a separate 250 lb driver case is planned.'}]},
- {title:'Engineering Computation',category:'Code · Analysis · Engineering',status:'Learning in progress',description:'Building programming and computational skills through engineering coursework and practice, including completion of MathWorks MATLAB Onramp.',tags:['MATLAB','Python','Java','MATLAB Onramp','Problem solving'],note:'MATLAB Onramp completed. Further engineering computation and modeling skills are in progress.',sections:[{title:'MATLAB Onramp — Completed',description:'MathWorks MATLAB Onramp course completion certificate · 12 July 2026 · 100% completed · 2-hour self-paced course. Introductory MATLAB skills include variables, arrays, calculations, scripts, plotting and programming.',images:[{src:'assets/matlab-onramp-certificate.webp',alt:'MathWorks MATLAB Onramp course completion certificate dated 12 July 2026',caption:'Official MATLAB Onramp completion certificate'}],certificatePdf:'assets/matlab-onramp-certificate.pdf'}]}
+ {title:'Engineering Computation',category:'Code · Analysis · Engineering',status:'Learning in progress',description:'Building programming and computational skills through engineering coursework and practice, including completion of MathWorks MATLAB Onramp.',tags:['MATLAB','Python','Java','MATLAB Onramp','Problem solving'],note:'MATLAB Onramp completed. Further engineering computation and modeling skills are in progress.',sections:[{title:'See Certification',description:'MATLAB Onramp · MathWorks Training Services · Completed 12 July 2026 · 100% of the 2-hour self-paced training course. Preview the actual completion certificate below, or open the original PDF.',images:[{src:'assets/matlab-onramp-certificate.webp',alt:'MathWorks MATLAB Onramp completion certificate dated 12 July 2026',caption:'MATLAB Onramp — official course completion certificate'}],certificatePdf:'assets/matlab-onramp-certificate.pdf'}]}
 ];
 const modal=document.getElementById('projectModal');
 const closeButton=modal.querySelector('.close-project');
@@ -526,7 +533,13 @@ let initialConceptContent=null;
 (p.sections||[]).forEach((section,sectionIndex)=>{
   const block=document.createElement('details');block.className='pdf-details project-subsection';
   const head=document.createElement('summary');
-  if(p.title==='Go-Kart Project' && sectionIndex===0){
+  if(p.title==='Engineering Computation' && section.certificatePdf){
+    head.classList.add('certificate-summary');
+    const icon=document.createElement('span');icon.className='certificate-summary-icon';icon.textContent='▣';icon.setAttribute('aria-hidden','true');
+    const title=document.createElement('span');title.textContent=section.title;
+    head.append(icon,title);
+    block.classList.add('certificate-subsection');
+  } else if(p.title==='Go-Kart Project' && sectionIndex===0){
     head.classList.add('concept-preview-summary');
     const thumb=document.createElement('img');
     thumb.src='assets/initial-go-kart-chassis-full.webp';
