@@ -579,7 +579,7 @@ const row=document.createElement('div');row.className='actions';
 const link=document.createElement('a');link.className='btn secondary';link.href=p.document.href;link.target='_blank';link.rel='noopener noreferrer';link.textContent='Open full PDF ↗';
 row.append(link);content.append(title,frame,row);details.append(summary,content);brief.append(details);
 }
-brief.hidden=!(p.details?.length||p.document);
+brief.hidden=!(p.sections?.length||p.details?.length||p.document);
 gallery.hidden=!p.photos?.length;modal.querySelector('.project-sheet').scrollTop=0;modal.classList.add('is-open');modal.setAttribute('aria-hidden','false');document.body.classList.add('modal-open');closeButton.focus();}
 document.querySelectorAll('.card[data-project]').forEach(card=>{card.addEventListener('click',()=>openProject(Number(card.dataset.project),card));card.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();openProject(Number(card.dataset.project),card);}});});
 closeButton.addEventListener('click',closeModal);document.getElementById('projectBack').addEventListener('click',closeModal);modal.addEventListener('click',event=>{if(event.target===modal)closeModal();});document.addEventListener('keydown',event=>{if(event.key==='Escape'&&modal.classList.contains('is-open'))closeModal();});
