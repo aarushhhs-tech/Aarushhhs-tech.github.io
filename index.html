@@ -371,19 +371,21 @@ transition:border-color .2s ease,box-shadow .2s ease;
 @media(max-width:600px) { .pdf-details-content { padding:10px; } .pdf-preview { height:60vh; min-height:300px; } }
 
 /* Project-only carousel beside the hero introduction. */
-.hero-showcase{display:grid;grid-template-columns:minmax(0,1fr) minmax(390px,540px);align-items:center;gap:clamp(24px,3vw,46px);margin-top:22px}
+.hero-showcase{display:grid;grid-template-columns:minmax(0,1fr) minmax(410px,560px);align-items:center;gap:clamp(24px,3vw,46px);margin-top:22px}
 .hero-intro{min-width:0}
 .hero-showcase h1{font-size:clamp(47px,6.3vw,100px);margin:14px 0 28px;overflow-wrap:normal}
 .hero-intro .actions{margin-top:20px}
-.hero-gallery{min-width:0;border:1px solid rgba(255,255,255,.23);background:rgba(16,11,17,.46);padding:13px;border-radius:21px;box-shadow:0 22px 45px rgba(0,0,0,.2);backdrop-filter:blur(6px)}
+.hero-gallery{min-width:0;transform:translateY(-30px);border:1px solid rgba(255,255,255,.23);background:rgba(16,11,17,.46);padding:13px;border-radius:21px;box-shadow:0 22px 45px rgba(0,0,0,.2);backdrop-filter:blur(6px)}
 .hero-gallery-top,.hero-gallery-bottom{display:flex;justify-content:space-between;align-items:center;gap:12px}
 .hero-gallery-top{padding:5px 5px 12px}
 .hero-gallery-kicker,.hero-gallery-counter{font-size:10px;font-weight:800;letter-spacing:.17em;color:#f4dfdc}
 .hero-gallery-counter{font-variant-numeric:tabular-nums;letter-spacing:.1em}
-.hero-gallery-stage{position:relative;width:100%;aspect-ratio:5/4;overflow:hidden;border-radius:12px;background:#14121a}
+.hero-gallery-stage{position:relative;width:100%;aspect-ratio:6/5;overflow:hidden;border-radius:12px;background:#14121a}
 .hero-gallery-slide{position:absolute;inset:0;margin:0;opacity:0;visibility:hidden;transition:opacity .5s ease,visibility .5s ease}
 .hero-gallery-slide.is-active{opacity:1;visibility:visible}
-.hero-gallery-slide img{display:block;width:100%;height:100%;object-fit:contain;background:#17131d}
+.hero-gallery-slide::before{content:"";position:absolute;inset:-24px;background:var(--slide-image) center/cover no-repeat;filter:blur(22px) brightness(.6);transform:scale(1.08)}
+.hero-gallery-slide.is-photo::before{display:none}
+.hero-gallery-slide img{position:relative;display:block;width:100%;height:100%;object-fit:contain;background:transparent}.hero-gallery-slide.is-photo img{object-fit:cover}
 .hero-gallery-slide figcaption{position:absolute;left:0;right:0;bottom:0;padding:25px 15px 12px;background:linear-gradient(transparent,rgba(0,0,0,.85));color:#fff;font-size:13px;font-weight:700;letter-spacing:.02em}
 .hero-gallery-arrow{position:absolute;z-index:2;top:48%;transform:translateY(-50%);width:35px;height:40px;border:1px solid rgba(255,255,255,.3);border-radius:10px;background:rgba(11,9,15,.7);color:white;cursor:pointer;font-size:28px;line-height:1}
 .hero-gallery-prev{left:9px}.hero-gallery-next{right:9px}
@@ -392,7 +394,7 @@ transition:border-color .2s ease,box-shadow .2s ease;
 .hero-gallery-dots{display:flex;align-items:center;gap:7px}
 .hero-gallery-dot{width:9px;height:9px;border:0;border-radius:99px;background:rgba(255,255,255,.38);cursor:pointer;padding:0;transition:width .2s,background .2s}
 .hero-gallery-dot.is-active{width:24px;background:#fff}
-@media(max-width:1150px){.hero-showcase{grid-template-columns:1fr}.hero-gallery{width:min(100%,640px)}.hero-showcase h1{font-size:clamp(48px,8vw,100px)}}
+@media(max-width:1150px){.hero-showcase{grid-template-columns:1fr}.hero-gallery{width:min(100%,640px);transform:none}.hero-showcase h1{font-size:clamp(48px,8vw,100px)}}
 @media(max-width:550px){.hero-showcase{gap:25px}.hero-gallery{padding:10px;border-radius:16px}.hero-gallery-stage{aspect-ratio:5/4}.hero-gallery-bottom{font-size:10px}}
 @media(prefers-reduced-motion:reduce){.hero-gallery-slide,.hero-gallery-dot{transition:none!important}}
 
@@ -417,12 +419,12 @@ transition:border-color .2s ease,box-shadow .2s ease;
       <section class="hero-gallery" aria-label="Selected project photographs and CAD models" aria-roledescription="carousel">
         <div class="hero-gallery-top"><span class="hero-gallery-kicker">INTERESTING PHOTOS</span><span class="hero-gallery-counter" aria-live="polite">01 / 06</span></div>
         <div class="hero-gallery-stage">
-          <figure class="hero-gallery-slide is-active"><img src="assets/rocket-recovery-concept.jpg" alt="Rocket recovery system design concept" loading="eager" decoding="async"><figcaption>Rocket Recovery</figcaption></figure>
-          <figure class="hero-gallery-slide" aria-hidden="true"><img src="assets/go-kart-team.jpg" alt="ASME go-kart project team photograph" loading="lazy" decoding="async"><figcaption>ASME Go-Kart</figcaption></figure>
-          <figure class="hero-gallery-slide" aria-hidden="true"><img src="assets/initial-go-kart-chassis-full.webp" alt="Initial go-kart chassis designed in SOLIDWORKS" loading="lazy" decoding="async"><figcaption>Chassis CAD</figcaption></figure>
-          <figure class="hero-gallery-slide" aria-hidden="true"><img src="assets/solidworks-rounded-shell-practice.png" alt="SOLIDWORKS rounded shell modeling practice" loading="lazy" decoding="async"><figcaption>CAD Practice</figcaption></figure>
-          <figure class="hero-gallery-slide" aria-hidden="true"><img src="assets/solidworks-vessel-practice.png" alt="SOLIDWORKS vessel modeling practice" loading="lazy" decoding="async"><figcaption>CAD Practice</figcaption></figure>
-          <figure class="hero-gallery-slide" aria-hidden="true"><img src="assets/static-test-stress.webp" alt="Go-kart chassis static stress simulation" loading="lazy" decoding="async"><figcaption>Structural Analysis</figcaption></figure>
+          <figure style="--slide-image:url('assets/rocket-recovery-concept.jpg')" class="hero-gallery-slide is-photo is-active"><img src="assets/rocket-recovery-concept.jpg" alt="Rocket recovery system design concept" loading="eager" decoding="async"><figcaption>Rocket Recovery</figcaption></figure>
+          <figure style="--slide-image:url('assets/go-kart-team.jpg')" class="hero-gallery-slide is-photo" aria-hidden="true"><img src="assets/go-kart-team.jpg" alt="ASME go-kart project team photograph" loading="lazy" decoding="async"><figcaption>ASME Go-Kart</figcaption></figure>
+          <figure style="--slide-image:url('assets/initial-go-kart-chassis-full.webp')" class="hero-gallery-slide" aria-hidden="true"><img src="assets/initial-go-kart-chassis-full.webp" alt="Initial go-kart chassis designed in SOLIDWORKS" loading="lazy" decoding="async"><figcaption>Chassis CAD</figcaption></figure>
+          <figure style="--slide-image:url('assets/solidworks-rounded-shell-practice.png')" class="hero-gallery-slide" aria-hidden="true"><img src="assets/solidworks-rounded-shell-practice.png" alt="SOLIDWORKS rounded shell modeling practice" loading="lazy" decoding="async"><figcaption>CAD Practice</figcaption></figure>
+          <figure style="--slide-image:url('assets/solidworks-vessel-practice.png')" class="hero-gallery-slide" aria-hidden="true"><img src="assets/solidworks-vessel-practice.png" alt="SOLIDWORKS vessel modeling practice" loading="lazy" decoding="async"><figcaption>CAD Practice</figcaption></figure>
+          <figure style="--slide-image:url('assets/static-test-stress.webp')" class="hero-gallery-slide" aria-hidden="true"><img src="assets/static-test-stress.webp" alt="Go-kart chassis static stress simulation" loading="lazy" decoding="async"><figcaption>Structural Analysis</figcaption></figure>
           <button type="button" class="hero-gallery-arrow hero-gallery-prev" aria-label="Previous project image">‹</button>
           <button type="button" class="hero-gallery-arrow hero-gallery-next" aria-label="Next project image">›</button>
         </div>
