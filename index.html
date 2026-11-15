@@ -559,7 +559,7 @@ return figure;
 const brief=document.getElementById('projectBrief');brief.replaceChildren();
 let initialConceptContent=null;
 (p.sections||[]).forEach((section,sectionIndex)=>{
-  const block=document.createElement('details');block.className='pdf-details project-subsection';
+  const block=document.createElement('details');block.className='pdf-details project-subsection';if(p.title==='Go-Kart Project')block.open=true;
   const head=document.createElement('summary');
   if(p.title==='Engineering Computation' && section.certificatePdf){
     head.classList.add('certificate-summary');
@@ -588,9 +588,9 @@ let initialConceptContent=null;
   (section.images||[]).forEach(photo=>{
     const figure=document.createElement('figure');
     const link=document.createElement('a');link.href=photo.src;link.target='_blank';link.rel='noopener noreferrer';link.setAttribute('aria-label','Open image: '+photo.alt);
-    const image=document.createElement('img');image.src=photo.src;image.alt=photo.alt;image.loading='lazy';image.decoding='async';image.addEventListener('error',()=>{if(photo.fallback&&!image.dataset.fallback){image.dataset.fallback='1';image.src=photo.fallback;}else{figure.hidden=true;}});
+    const image=document.createElement('img');image.src=photo.src;image.alt=photo.alt;image.loading='lazy';image.decoding='async';image.addEventListener('error',()=>{if(photo.fallback&&!image.dataset.fallback){image.dataset.fallback='1';image.src=photo.fallback;link.href=photo.fallback;}else{figure.hidden=true;}});
     link.append(image);figure.append(link);
-    if(p.title!=='Go-Kart Project'){const caption=document.createElement('figcaption');caption.textContent=photo.caption||photo.alt;figure.append(caption);}
+    const caption=document.createElement('figcaption');caption.textContent=photo.caption||photo.alt;figure.append(caption);
     photos.append(figure);
   });
   content.append(photos);
